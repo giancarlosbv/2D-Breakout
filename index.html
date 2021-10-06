@@ -31,8 +31,8 @@
         var score = 0
 
         //circle properties
-        var x = canvas.width / 2
-        var y = canvas.height - 30
+        var circleCenterX = canvas.width / 2
+        var circleCenterY = canvas.height - 30
         var dx = 2
         var dy = -2
         var ballRadius = 10;
@@ -73,7 +73,7 @@
 
         function drawBall() {
             ctx.beginPath()
-            ctx.arc(x, y, ballRadius, 0, Math.PI * 2)
+            ctx.arc(circleCenterX, circleCenterY, ballRadius, 0, Math.PI * 2)
             //(1)x and (2)y coordinates of the arc(circle)'s center
             //(3)arc radius
             //(4)start angle and (5)end angle (what angle to start and finish drawing the circle, in radians)
@@ -114,13 +114,13 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height)
             drawBall()
 
-            x += dx
-            y += dy
+            circleCenterX += dx
+            circleCenterY += dy
 
-            if (y + dy < ballRadius) {
+            if (circleCenterY + dy < ballRadius) {
                 dy = -dy
-            } else if (y + dy > canvas.height - ballRadius) {
-                if (x > paddleX && x < paddleX + paddleWidth) {
+            } else if (circleCenterY + dy > canvas.height - ballRadius) {
+                if (circleCenterX > paddleX && circleCenterX < paddleX + paddleWidth) {
                     dy = -dy
                     dx = -dx
                 } else {
@@ -129,7 +129,7 @@
                     clearInterval(interval)
                 }
             }
-            if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+            if (circleCenterX + dx > canvas.width - ballRadius || circleCenterX + dx < ballRadius) {
                 dx = -dx
             }
             // Subtracting the radius from one edge's width and adding it onto the other gives us the impression of the proper collision detection
@@ -182,7 +182,7 @@
                 for (var r = 0; r < brickRowCount; r++) {
                     var b = bricks[c][r]
                     if (b.status == 1) {
-                        if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight)
+                        if (circleCenterX > b.x && circleCenterX < b.x + brickWidth && circleCenterY > b.y && circleCenterY < b.y + brickHeight)
                         // The x position of the ball is greater than the x position of the brick.
                         // The x position of the ball is less than the x position of the brick plus its width.
                         // The y position of the ball is greater than the y position of the brick.
